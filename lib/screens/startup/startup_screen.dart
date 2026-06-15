@@ -23,10 +23,6 @@ class _StartupScreenState extends State<StartupScreen> {
   Future<void> checkSavedPlan() async {
     final studyPlan = await storage.getStudyPlan();
 
-    debugPrint(
-      studyPlan == null ? "NO PLAN FOUND" : "PLAN FOUND: ${studyPlan.examName}",
-    );
-
     if (!mounted) return;
 
     if (studyPlan == null) {
@@ -52,12 +48,6 @@ class _StartupScreenState extends State<StartupScreen> {
         ),
       ),
     );
-
-    /*
-    Dashboard restore
-    will be added next
-    */
-
   }
 
   @override

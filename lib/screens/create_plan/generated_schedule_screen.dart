@@ -16,29 +16,59 @@ class GeneratedScheduleScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final groupedTasks = groupTasksByDate();
+
+    final dates = groupedTasks.keys.toList();
     return Scaffold(
       appBar: AppBar(title: const Text("Study Schedule")),
 
       body: ListView.builder(
-        itemCount: tasks.length,
+        itemCount: dates.length,
 
         itemBuilder: (context, index) {
-          final task = tasks[index];
+          final date = dates[index];
+
+          final dayTasks = groupedTasks[date]!;
 
           return Card(
             margin: const EdgeInsets.all(10),
 
-            child: ListTile(
-              title: Text(task.topicName),
+            child: Padding(
+              padding: const EdgeInsets.all(12),
 
-              leading: Icon(task.isRevision ? Icons.refresh : Icons.book),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
 
-              subtitle: Text(
-                "${task.subjectName}\n"
-                "${task.date.day}/${task.date.month}/${task.date.year}",
+                children: [
+                  Text(
+                    "📅 $date",
+
+                    style: const TextStyle(
+                      fontSize: 18,
+
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  const Divider(),
+
+                  ...dayTasks.map((task) {
+                    return ListTile(
+                      contentPadding: EdgeInsets.zero,
+
+                      leading: Icon(
+                        task.isRevision ? Icons.refresh : Icons.book,
+                      ),
+
+                      title: Text(task.topicName),
+
+                      subtitle: Text(task.subjectName),
+
+                      trailing: Text("${task.allocatedHours}h"),
+                    );
+                  }),
+                ],
               ),
-
-              trailing: Text("${task.allocatedHours}h"),
             ),
           );
         },
@@ -59,5 +89,22 @@ class GeneratedScheduleScreen extends StatelessWidget {
         label: const Text("Dashboard"),
       ),
     );
+  }
+
+  Map<String, List<DailyTaskModel>> groupTasksByDate() {
+    final Map<String, List<DailyTaskModel>> grouped = {};
+
+    for (final task in tasks) {
+      final key =
+          "${task.date.day}/"
+          "${task.date.month}/"
+          "${task.date.year}";
+
+      grouped.putIfAbsent(key, () => []);
+
+      grouped[key]!.add(task);
+    }
+
+    return grouped;
   }
 }

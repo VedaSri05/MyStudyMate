@@ -1,7 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import '../models/study_plan_model.dart';
-import 'package:flutter/foundation.dart';
 
 class LocalStorageService {
   Future<void> savePlanDetails({
@@ -51,26 +50,12 @@ class LocalStorageService {
     return prefs.getStringList('completed_topics') ?? [];
   }
 
-  Future<void> saveStudyPlan(StudyPlanModel plan) async {
-    final prefs = await SharedPreferences.getInstance();
-
-    final jsonString = jsonEncode(plan.toJson());
-
-    debugPrint("SAVING PLAN: $jsonString");
-
-    final result = await prefs.setString('study_plan', jsonString);
-
-    debugPrint("KEYS AFTER SAVE: ${prefs.getKeys()}");
-
-    debugPrint("SAVE RESULT: $result");
-
-    debugPrint("PLAN SAVED SUCCESSFULLY");
-  }
-
-  Future<void> clearStudyPlan() async {
+  Future<void> deleteStudyPlan() async {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.remove('study_plan');
+
+    await prefs.remove('completed_topics');
 
     await prefs.remove('exam_name');
 
@@ -81,14 +66,24 @@ class LocalStorageService {
     await prefs.remove('weekend_hours');
   }
 
+  Future<void> saveStudyPlan(StudyPlanModel plan) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final jsonString = jsonEncode(plan.toJson());
+
+    await prefs.setString('study_plan', jsonString);
+  }
+
+  Future<void> clearStudyPlan() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.clear();
+  }
+
   Future<StudyPlanModel?> getStudyPlan() async {
     final prefs = await SharedPreferences.getInstance();
 
-    debugPrint("ALL KEYS: ${prefs.getKeys()}");
-
     final jsonString = prefs.getString('study_plan');
-
-    debugPrint("STUDY PLAN JSON: $jsonString");
 
     if (jsonString == null) {
       return null;

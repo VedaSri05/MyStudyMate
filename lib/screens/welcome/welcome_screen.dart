@@ -14,31 +14,21 @@ class WelcomeScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(
-                Icons.school,
-                size: 100,
-                color: Colors.blue,
-              ),
+              Image.asset("assets/icons/studyflow_ai.png", height: 120),
 
               const SizedBox(height: 30),
 
               const Text(
                 "StudyFlow AI",
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
               ),
 
               const SizedBox(height: 12),
 
               const Text(
-                "Your study plan adapts when life happens.",
+                "Smart Exam Planning. Stress-Free Preparation.",
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey,
-                ),
+                style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
 
               const SizedBox(height: 50),
@@ -48,15 +38,15 @@ class WelcomeScreen extends StatelessWidget {
                 height: 55,
                 child: ElevatedButton(
                   onPressed: () {
-                  Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const CreatePlanScreen(),
-                  ),
-                );
-              },
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const CreatePlanScreen(),
+                      ),
+                    );
+                  },
                   child: const Text(
-                    "Create My Study Plan",
+                    "Create Study Plan",
                     style: TextStyle(fontSize: 18),
                   ),
                 ),

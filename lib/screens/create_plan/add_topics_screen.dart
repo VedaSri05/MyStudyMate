@@ -30,7 +30,6 @@ class _AddTopicsScreenState extends State<AddTopicsScreen> {
 
   final Map<String, String> selectedDifficulty = {};
 
-  @override
   void showDeleteDialog(TopicModel topic) {
     showDialog(
       context: context,
@@ -65,7 +64,6 @@ class _AddTopicsScreenState extends State<AddTopicsScreen> {
     );
   }
 
-  @override
   void editTopicDialog(TopicModel topic) {
     final controller = TextEditingController(text: topic.topicName);
 
@@ -93,7 +91,7 @@ class _AddTopicsScreenState extends State<AddTopicsScreen> {
                   const SizedBox(height: 15),
 
                   DropdownButtonFormField<String>(
-                    value: difficulty,
+                    initialValue: difficulty,
 
                     items: const [
                       DropdownMenuItem(
@@ -173,7 +171,7 @@ class _AddTopicsScreenState extends State<AddTopicsScreen> {
       topicControllers[subject] = TextEditingController();
       topicFocusNodes[subject] = FocusNode();
 
-      selectedDifficulty[subject] = "Easy";
+      selectedDifficulty[subject] = "Very Easy";
     }
   }
 
@@ -181,6 +179,19 @@ class _AddTopicsScreenState extends State<AddTopicsScreen> {
     final topicName = topicControllers[subject]!.text.trim();
 
     if (topicName.isEmpty) return;
+
+    if (topics.any(
+      (topic) =>
+          topic.subjectName == subject &&
+          topic.topicName.toLowerCase().trim() ==
+              topicName.toLowerCase().trim(),
+    )) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Topic already exists")));
+
+      return;
+    }
 
     setState(() {
       topics.add(
@@ -198,6 +209,10 @@ class _AddTopicsScreenState extends State<AddTopicsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final allSubjectsHaveTopics = widget.subjects.every((subject) {
+      return topics.any((topic) => topic.subjectName == subject);
+    });
+
     return Scaffold(
       appBar: AppBar(title: const Text("Add Topics")),
 
@@ -291,11 +306,6 @@ class _AddTopicsScreenState extends State<AddTopicsScreen> {
                           selectedDifficulty[subject] = value!;
                         });
                       },
-                    ),
-
-                    const Text(
-                      "Estimated study time:",
-                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
 
                     const SizedBox(height: 8),
@@ -476,7 +486,7 @@ class _AddTopicsScreenState extends State<AddTopicsScreen> {
             height: 55,
 
             child: ElevatedButton(
-              onPressed: topics.isEmpty
+              onPressed: !allSubjectsHaveTopics
                   ? null
                   : () async {
                       final totalRequiredHours = plannerService
@@ -500,6 +510,7 @@ class _AddTopicsScreenState extends State<AddTopicsScreen> {
                             examDate: widget.examDetails.examDate,
                             weekdayHours: widget.examDetails.weekdayHours,
                             weekendHours: widget.examDetails.weekendHours,
+                            blockedDates: widget.examDetails.blockedDates,
                           );
 
                       final status = plannerService.getRealityCheckStatus(
@@ -514,6 +525,8 @@ class _AddTopicsScreenState extends State<AddTopicsScreen> {
                         weekendHours: widget.examDetails.weekendHours,
                       );
 
+                      if (!context.mounted) return;
+                      
                       Navigator.push(
                         context,
                         MaterialPageRoute(

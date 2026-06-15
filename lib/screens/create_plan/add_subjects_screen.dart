@@ -18,14 +18,77 @@ class _AddSubjectsScreenState extends State<AddSubjectsScreen> {
   List<String> subjects = [];
 
   void addSubject() {
-    if (subjectController.text.trim().isEmpty) return;
+    final subjectName = subjectController.text.trim();
+
+    if (subjectName.isEmpty) {
+      return;
+    }
+
+    if (subjects.any(
+      (subject) => subject.toLowerCase() == subjectName.toLowerCase(),
+    )) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Subject already exists")));
+
+      return;
+    }
 
     setState(() {
-      subjects.add(subjectController.text.trim());
+      subjects.add(subjectName);
     });
 
     subjectController.clear();
+
     subjectFocus.requestFocus();
+  }
+
+  void editSubject(int index) {
+    final controller = TextEditingController(text: subjects[index]);
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Edit Subject"),
+
+          content: TextField(
+            controller: controller,
+            decoration: const InputDecoration(labelText: "Subject Name"),
+          ),
+
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text("Cancel"),
+            ),
+
+            ElevatedButton(
+              onPressed: () {
+                if (controller.text.trim().isEmpty) {
+                  return;
+                }
+
+                setState(() {
+                  subjects[index] = controller.text.trim();
+                });
+
+                Navigator.pop(context);
+              },
+              child: const Text("Save"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void deleteSubject(int index) {
+    setState(() {
+      subjects.removeAt(index);
+    });
   }
 
   @override
@@ -71,13 +134,55 @@ class _AddSubjectsScreenState extends State<AddSubjectsScreen> {
                     child: ListTile(
                       leading: const Icon(Icons.book, color: Colors.blue),
                       title: Text(subjects[index]),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.delete),
-                        onPressed: () {
-                          setState(() {
-                            subjects.removeAt(index);
-                          });
-                        },
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.edit),
+                            onPressed: () {
+                              editSubject(index);
+                            },
+                          ),
+
+                          IconButton(
+                            icon: const Icon(Icons.delete),
+                            onPressed: () async {
+                              final shouldDelete = await showDialog<bool>(
+                                context: context,
+
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: const Text("Delete Subject"),
+
+                                    content: Text("Delete ${subjects[index]}?"),
+
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context, false);
+                                        },
+
+                                        child: const Text("Cancel"),
+                                      ),
+
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.pop(context, true);
+                                        },
+
+                                        child: const Text("Delete"),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+
+                              if (shouldDelete == true) {
+                                deleteSubject(index);
+                              }
+                            },
+                          ),
+                        ],
                       ),
                     ),
                   );

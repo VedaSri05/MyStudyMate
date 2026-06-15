@@ -66,7 +66,7 @@ class PlanSummaryScreen extends StatelessWidget {
               if (availableHours > totalRequiredHours)
                 summaryCard(
                   "Revision Time Available",
-                  "${availableHours - totalRequiredHours} hrs",
+                  "${availableHours - totalRequiredHours} hr(s)",
                 ),
 
               summaryCard("Preparation Status", status),
@@ -103,7 +103,62 @@ class PlanSummaryScreen extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () async {
                     final plannerService = PlannerService();
+
+                    if (availableHours <= 0) {
+                      await showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text("Plan Cannot Be Generated"),
+
+                            content: const Text(
+                              "All available study days are blocked.\n\nPlease leave at least one day for preparation.",
+                            ),
+
+                            actions: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+
+                                child: const Text("OK"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+
+                      return;
+                    }
+
                     final storage = LocalStorageService();
+
+                    if (availableHours < totalRequiredHours) {
+                      await showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text("Plan Not Possible"),
+
+                            content: const Text(
+                              "Required study hours exceed available hours.\n\nRemove some topics and try again.",
+                            ),
+
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+
+                                child: const Text("OK"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+
+                      return;
+                    }
 
                     final tasks = plannerService.generateDailyTasks(
                       examDate: examDetails.examDate,
@@ -113,6 +168,8 @@ class PlanSummaryScreen extends StatelessWidget {
                       weekendHours: examDetails.weekendHours,
 
                       topics: topics,
+
+                      blockedDates: examDetails.blockedDates,
                     );
                     final studyPlan = StudyPlanModel(
                       planId: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -138,9 +195,7 @@ class PlanSummaryScreen extends StatelessWidget {
                     );
 
                     await storage.saveStudyPlan(studyPlan);
-
-                    debugPrint("SAVE METHOD CALLED");
-
+                    if (!context.mounted) return;
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -156,6 +211,20 @@ class PlanSummaryScreen extends StatelessWidget {
                   child: const Text("Continue"),
                 ),
               ),
+              const SizedBox(height: 10),
+
+              SizedBox(
+                width: double.infinity,
+                height: 55,
+
+                child: OutlinedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+
+                  child: const Text("Modify Plan"),
+                ),
+              ),
             ],
           ),
         ),
@@ -163,7 +232,6 @@ class PlanSummaryScreen extends StatelessWidget {
     );
   }
 
-  @override
   Widget summaryCard(String title, String value) {
     return Card(
       margin: const EdgeInsets.only(bottom: 15),
