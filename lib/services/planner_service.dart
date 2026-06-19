@@ -134,7 +134,8 @@ class PlannerService {
       return tasks;
     }
 
-    if (remainingDayHours > 0) {
+    if (remainingDayHours > 0 &&
+        currentDate.isBefore(examDate.subtract(const Duration(days: 1)))) {
       tasks.add(
         DailyTaskModel(
           date: currentDate,
@@ -165,9 +166,13 @@ class PlannerService {
         finalRevisionDate.weekday == DateTime.saturday ||
         finalRevisionDate.weekday == DateTime.sunday;
 
-    final finalRevisionHours = finalRevisionIsWeekend
+    int finalRevisionHours = finalRevisionIsWeekend
         ? weekendHours
         : weekdayHours;
+
+    if (actualFinalRevisionDate == currentDate) {
+      finalRevisionHours = remainingDayHours;
+    }
 
     if (extraHours > 0) {
       revisionDate = currentDate.add(const Duration(days: 1));
@@ -227,10 +232,12 @@ class PlannerService {
       }
     }
 
-    if (actualFinalRevisionDate == currentDate) {
-      return tasks;
+    if (actualFinalRevisionDate.year == currentDate.year &&
+        actualFinalRevisionDate.month == currentDate.month &&
+        actualFinalRevisionDate.day == currentDate.day) {
+      finalRevisionHours = remainingDayHours;
     }
-    
+
     tasks.add(
       DailyTaskModel(
         date: actualFinalRevisionDate,

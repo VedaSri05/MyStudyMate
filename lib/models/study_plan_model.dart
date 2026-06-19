@@ -19,6 +19,7 @@ class StudyPlanModel {
   final List<TopicModel> topics;
 
   final List<DailyTaskModel> tasks;
+  final List<DateTime> blockedDates;
 
   StudyPlanModel({
     required this.planId,
@@ -30,6 +31,7 @@ class StudyPlanModel {
     required this.subjects,
     required this.topics,
     required this.tasks,
+    required this.blockedDates,
   });
 
   Map<String, dynamic> toJson() {
@@ -51,6 +53,10 @@ class StudyPlanModel {
       'topics': topics.map((topic) => topic.toJson()).toList(),
 
       'tasks': tasks.map((task) => task.toJson()).toList(),
+
+      'blockedDates': blockedDates
+          .map((date) => date.toIso8601String())
+          .toList(),
     };
   }
 
@@ -76,6 +82,10 @@ class StudyPlanModel {
 
       tasks: (json['tasks'] as List)
           .map((task) => DailyTaskModel.fromJson(task))
+          .toList(),
+
+      blockedDates: (json['blockedDates'] as List)
+          .map((date) => DateTime.parse(date))
           .toList(),
     );
   }

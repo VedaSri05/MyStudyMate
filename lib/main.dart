@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'screens/startup/startup_screen.dart';
+import 'services/notification_service.dart';
 
-void main() {
-  runApp(const StudyFlowApp()); 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await NotificationService.initialize();
+
+  runApp(const StudyFlowApp());
 }
- 
+
 class StudyFlowApp extends StatelessWidget {
   const StudyFlowApp({super.key});
 
@@ -13,9 +18,7 @@ class StudyFlowApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'StudyFlow AI',
-      theme: ThemeData( 
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue),
       home: const StartupScreen(),
     );
   }

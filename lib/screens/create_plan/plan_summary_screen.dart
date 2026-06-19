@@ -168,7 +168,6 @@ class PlanSummaryScreen extends StatelessWidget {
                       weekendHours: examDetails.weekendHours,
 
                       topics: topics,
-
                       blockedDates: examDetails.blockedDates,
                     );
                     final studyPlan = StudyPlanModel(
@@ -192,6 +191,7 @@ class PlanSummaryScreen extends StatelessWidget {
                       topics: topics,
 
                       tasks: tasks,
+                      blockedDates: examDetails.blockedDates,
                     );
 
                     await storage.saveStudyPlan(studyPlan);
@@ -203,6 +203,7 @@ class PlanSummaryScreen extends StatelessWidget {
                           tasks: tasks,
                           examName: examDetails.examName,
                           examDate: examDetails.examDate,
+                          blockedDates: examDetails.blockedDates,
                         ),
                       ),
                     );

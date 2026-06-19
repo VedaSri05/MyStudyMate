@@ -21,6 +21,7 @@ class _StartupScreenState extends State<StartupScreen> {
   }
 
   Future<void> checkSavedPlan() async {
+
     final studyPlan = await storage.getStudyPlan();
 
     if (!mounted) return;
@@ -45,6 +46,7 @@ class _StartupScreenState extends State<StartupScreen> {
           examDate: studyPlan.examDate,
 
           tasks: studyPlan.tasks,
+          blockedDates: studyPlan.blockedDates,
         ),
       ),
     );

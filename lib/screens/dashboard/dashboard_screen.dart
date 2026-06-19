@@ -10,12 +10,14 @@ class DashboardScreen extends StatefulWidget {
   final String examName;
   final DateTime examDate;
   final List<DailyTaskModel> tasks;
+  final List<DateTime> blockedDates;
 
   const DashboardScreen({
     super.key,
     required this.examName,
     required this.examDate,
     required this.tasks,
+    required this.blockedDates,
   });
 
   @override
@@ -90,23 +92,55 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     saveCompletionStatus();
 
-    final completedCount = tasks.where((task) => task.isCompleted).length;
+    final allTodayCompleted =
+        todaysTasks.isNotEmpty && todaysTasks.every((task) => task.isCompleted);
 
-    if (completedCount == tasks.length && tasks.isNotEmpty) {
-      await showDialog(
+    if (allTodayCompleted) {
+      showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text("Congratulations 🎉"),
+            title: const Text("🎉 Congratulations!"),
+
             content: const Text(
-              "You have completed your entire study plan. Best wishes for your exam!",
+              "You have completed all today's study tasks.\n\nKeep up the great work and come back tomorrow!",
             ),
+
             actions: [
-              TextButton(
+              ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: const Text("OK"),
+
+                child: const Text("Awesome!"),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    final allPlanCompleted =
+        tasks.isNotEmpty && tasks.every((task) => task.isCompleted);
+
+    if (allPlanCompleted) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("🏆 Study Plan Completed!"),
+
+            content: const Text(
+              "Congratulations!\n\nYou have completed your entire study plan.\n\nWishing you success in your exam!",
+            ),
+
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+
+                child: const Text("Thank You"),
               ),
             ],
           );
@@ -374,6 +408,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         tasks: tasks,
                         examName: widget.examName,
                         examDate: widget.examDate,
+                        blockedDates: widget.blockedDates,
                       ),
                     ),
                   );
