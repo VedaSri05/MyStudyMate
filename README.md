@@ -1,122 +1,179 @@
-# StudyFlow AI
+# StudyFlow AI 📚
 
 Smart Exam Planning. Stress-Free Preparation.
 
-## Overview
-
-StudyFlow AI is a Flutter-based exam preparation planner that helps students create personalized study schedules based on:
-
-* Exam date
-* Subjects and topics
-* Difficulty level of topics
-* Available study hours on weekdays and weekends
-* Blocked dates (holidays, personal commitments, etc.)
-
-The app automatically generates a study plan, distributes topics across available days, allocates revision sessions, tracks progress, and saves data locally.
+StudyFlow AI is an intelligent exam preparation planner built with Flutter. It helps students create personalized study schedules based on exam dates, study availability, topic difficulty, and blocked dates. The app automatically generates a realistic study plan, allocates revision sessions, tracks progress, and stores everything locally on the device.
 
 ---
 
-## Application Screenshots
+## ✨ Features
 
-The repository includes screenshots demonstrating the complete StudyFlow AI workflow, including plan creation, subject and topic management, study schedule generation, dashboard progress tracking, and validation scenarios.
-
----
-
-## Features
-
-### Study Plan Creation
+### 🎯 Smart Study Plan Generation
 
 * Create exam-specific study plans
 * Add multiple subjects and topics
-* Difficulty-based hour estimation
-* Duplicate subject validation
-* Duplicate topic validation
+* Difficulty-based study hour estimation
+* Automatic topic distribution across available days
+* Intelligent revision scheduling
 
-### Smart Scheduling
+### 📅 Schedule Management
 
-* Automatic study schedule generation
-* Weekday and weekend study hour configuration
-* Blocked date support
-* Revision session generation
-* Final Revision + Mock Test scheduling
+* Configure weekday and weekend study hours
+* Block personal, travel, holiday, or busy dates
+* Automatic adjustment around blocked dates
+* Final Revision + Mock Test planning
 
-### Progress Tracking
+### 📈 Progress Tracking
 
 * Daily study checklist
 * Progress percentage tracking
-* Task completion persistence
-* Dashboard overview
+* Topic completion tracking
+* Exam countdown dashboard
 
-### Data Persistence
+### ⏱️ Pomodoro Study Timer
+
+* Built-in Pomodoro study timer
+* Start, pause, and reset sessions
+* Helps improve focus and productivity
+
+### 🔔 Notifications
+
+* Local notifications support
+* Study reminders and motivational alerts
+* Ready for future scheduled reminders
+
+### 💾 Data Persistence
 
 * Local storage using SharedPreferences
-* Plan survives app restart
+* Study plans survive app restart
 * Progress survives app restart
-* Delete plan functionality
+* Secure offline-first experience
 
-### User Experience
+### 🛡️ Validation & User Experience
 
-* Clean Material Design UI
+* Duplicate subject validation
+* Duplicate topic validation
+* Empty field validation
+* Material Design UI
 * Mobile-friendly interface
-* Validation dialogs and warnings
-* Study Timer
 
 ---
 
-## Tech Stack
+## 📱 Application Workflow
+
+1. Create a Study Plan
+2. Add Subjects and Topics
+3. Select Difficulty Levels
+4. Configure Available Study Hours
+5. Add Blocked Dates (Optional)
+6. Generate Smart Study Schedule
+7. Track Daily Progress
+8. Complete Revision Sessions
+9. Prepare for Exam with Confidence
+
+---
+
+## 🏗️ Tech Stack
 
 * Flutter
 * Dart
 * SharedPreferences
 * Material Design
+* flutter_local_notifications
 
 ---
 
-## Installation
+## 🚀 Getting Started
 
-1. Clone the repository
+### Prerequisites
 
+* Flutter SDK
+* Android Studio / VS Code
+* Android Emulator or Physical Device
+
+### Installation
+
+Clone the repository:
+
+```bash
 git clone https://github.com/your-username/StudyFlow-AI.git
+```
 
-2. Navigate into the project
+Navigate to project directory:
 
+```bash
 cd StudyFlow-AI
+```
 
-3. Install dependencies
+Install dependencies:
 
+```bash
 flutter pub get
+```
 
-4. Run the application
+Run the application:
 
+```bash
 flutter run
+```
 
 ---
 
-## Build APK
+## 🔨 Build APK
 
-Debug APK
+### Debug APK
 
+```bash
 flutter build apk --debug
+```
 
-Release APK
+### Release APK
 
+```bash
 flutter build apk --release
+```
+
+### Google Play App Bundle
+
+```bash
+flutter build appbundle --release
+```
 
 ---
 
-## Future Enhancements
+## 🎯 Future Enhancements
 
-* Adaptive schedule rescheduling
-* Priority topic planner
+* AI-powered adaptive rescheduling
 * Calendar-based schedule view
-* Exam reminder notifications
-* Performance analytics
+* Daily reminder notifications
+* Performance analytics dashboard
 * Cloud backup and synchronization
+* Multi-device support
+* Dark mode
+* Study streak tracking
+* Smart productivity insights
 
 ---
 
-## Author
+## 📌 Current Version
 
-Vedasri
+Version: 1.0.0
 
-Built using Flutter and Dart.
+### Completed Features
+
+* Smart schedule generation
+* Blocked dates support
+* Revision planning
+* Progress tracking
+* Pomodoro timer
+* Local notifications
+* Data persistence
+* Dashboard analytics
+
+---
+
+## 👩‍💻 Author
+
+**Vedasri**
+
+Built with Flutter ❤️ and Dart.
