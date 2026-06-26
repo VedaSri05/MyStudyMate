@@ -1,6 +1,6 @@
 {
-    "name": "studyflow_ai",
-    "short_name": "studyflow_ai",
+    "name": "mystudymate",
+    "short_name": "mystudymate",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

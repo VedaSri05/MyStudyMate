@@ -1,4 +1,4 @@
-name: studyflow_ai
+name: mystudymate
 description: "Smart Exam Planning. Stress-Free Preparation."
 publish_to: 'none'
 
@@ -23,7 +23,7 @@ dev_dependencies:
 flutter_icons:                      
   android: true
   ios: false
-  image_path: "assets/icons/studyflow_ai.png"
+  image_path: "assets/icons/mystudymate_icon.png"
 
 flutter:
   uses-material-design: true

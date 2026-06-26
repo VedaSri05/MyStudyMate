@@ -14,12 +14,12 @@ class WelcomeScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset("assets/icons/studyflow_ai.png", height: 120),
+              Image.asset("assets/icons/mystudymate_icon.png", height: 120),
 
               const SizedBox(height: 30),
 
               const Text(
-                "StudyFlow AI",
+                "MyStudyMate",
                 style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
               ),
 

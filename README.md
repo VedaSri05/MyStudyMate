@@ -1,8 +1,8 @@
-# StudyFlow AI 📚
+# MyStudyMate 📚
 
 Smart Exam Planning. Stress-Free Preparation.
 
-StudyFlow AI is an intelligent exam preparation planner built with Flutter. It helps students create personalized study schedules based on exam dates, study availability, topic difficulty, and blocked dates. The app automatically generates a realistic study plan, allocates revision sessions, tracks progress, and stores everything locally on the device.
+MyStudyMate is an intelligent exam preparation planner built with Flutter. It helps students create personalized study schedules based on exam dates, study availability, topic difficulty, and blocked dates. The app automatically generates a realistic study plan, allocates revision sessions, tracks progress, and stores everything locally on the device.
 
 ---
 
@@ -96,13 +96,13 @@ StudyFlow AI is an intelligent exam preparation planner built with Flutter. It h
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/StudyFlow-AI.git
+git clone https://github.com/your-username/MyStudyMate.git
 ```
 
 Navigate to project directory:
 
 ```bash
-cd StudyFlow-AI
+cd MyStudyMate
 ```
 
 Install dependencies:

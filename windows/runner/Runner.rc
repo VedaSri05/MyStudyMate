@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "studyflow_ai" "\0"
+            VALUE "FileDescription", "mystudymate" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "studyflow_ai" "\0"
+            VALUE "InternalName", "mystudymate" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2026 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "studyflow_ai.exe" "\0"
-            VALUE "ProductName", "studyflow_ai" "\0"
+            VALUE "OriginalFilename", "mystudymate.exe" "\0"
+            VALUE "ProductName", "mystudymate" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
